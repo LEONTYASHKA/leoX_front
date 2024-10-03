@@ -1,0 +1,190 @@
+/* Контейнер для чатов */
+.chat-container-main{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f7eb; /* Светлый фон */
+    /* background-image: url('/backgrond.jpg'); */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    border-radius: 12px; /* Скругленные углы */
+  }
+
+.message {
+    align-self: flex-start;
+    background-color: rgb(42, 47, 54); /* Темный фон */
+    color: #ffffff; /* Белый текст */
+    border-radius: 18px 18px 18px 0; /* Скругленные углы, похожие на Telegram */
+    padding: 10px;
+    padding-right: 38px;
+    margin: 5px 0; /* Отступы между сообщениями */
+    max-width: 80%; /* Ограничение ширины сообщения */
+    position: relative; /* Для позиционирования даты */
+    font-size: 14px; /* Увеличен размер шрифта */
+    word-wrap: break-word; /* Перенос слов */
+}
+.messageFromCurrentUser {
+    align-self: flex-end;
+    background-color: #5f50ff; /* Фиолетовый фон для пользователя */
+    color: #ffffff; /* Белый текст */
+    border-radius: 18px 18px 0 18px; /* Скругленные углы, как в Telegram */
+    padding: 10px;
+    padding-right: 38px;
+    margin: 10px 0; /* Отступы между сообщениями */
+    max-width: 100%; /* Ограничение ширины сообщения */
+    position: relative; /* Для позиционирования даты */
+    font-size: 14px;
+    word-wrap: break-word;
+}
+.date {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 11px;
+    color: #aaa;
+    font-family: 'Roboto', sans-serif; /* Шрифт, похожий на Telegram */
+}
+
+.chat-container-msg {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.send-message-container {
+    display: flex; /* Flexbox для выравнивания */
+    align-items: center; /* Вертикальное выравнивание по центру */
+    background-color: rgb(42, 54, 43); /* Темный фон */
+    color: #fff; /* Белый текст */
+border-bottom-left-radius: 20px;
+border-bottom-right-radius: 20px;
+    padding: px;
+    margin:  auto; /* Выравнивание по центру */
+    width: 100%;
+    max-width: 600px; /* Ограничение ширины как у .chat-container-msg */
+    font-size: 14px; /* Увеличен размер шрифта */
+}
+
+.send-message-container input {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    margin-right: 10px;
+    background-color: #3a3f47;
+    margin: 20px;
+    color: #fff;
+}
+.send-message-container button {
+    padding: 10px;
+    background-color: #5f50ff; /* Кнопка фиолетового цвета */
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 0px;
+}
+
+.send-message-container button:hover {
+    background-color: #4a42cc; /* Темнее при наведении */
+}
+.search-user-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+.search-user-container {
+    display: flex; /* Flexbox для выравнивания */
+    align-items: center; /* Вертикальное выравнивание по центру */
+    background-color: rgb(42, 54, 43); /* Темный фон */
+    color: #fff; /* Белый текст */
+border-top-left-radius: 20px;
+border-top-right-radius: 20px;
+    padding: 0px;
+    margin: auto; /* Выравнивание по центру */
+    width: 100%;
+    max-width: 600px; /* Ограничение ширины как у .chat-container-msg */
+    font-size: 14px; /* Увеличен размер шрифта */
+}
+
+
+.search-user-container input {
+    flex: 1; /* Поле занимает все доступное пространство */
+    padding: 10px ;
+    border: none;
+    border-radius: 20px;
+    margin-right: 10px;
+    background-color: #3a3f47;
+    color: #fff;
+    width: 300px;
+}
+
+.search-user-container button {
+    padding: 10px 20px;
+    background-color: #5f50ff; /* Кнопка фиолетового цвета */
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.search-user-container button:hover{
+    background-color: #4a42cc; /* Темнее при наведении */
+}
+.place-for-msg{
+    width: 100%;
+    max-width: 550px;
+    margin-left: 25px;
+    padding: 0px;
+    font-family: 'Arial', sans-serif;
+ 
+}
+.found-user{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #55445d;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 10px 20px 10px;
+    font-family: 'Roboto', sans-serif;
+    
+}
+.found-user button {
+    background-color: #5f50ff;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 10px;
+}
+.found-user button:hover{
+    background-color: #4a42cc; /* Темнее при наведении */
+}
+.name-chats{
+    width: 100%;
+    max-width: 600px;
+    background-color: #3a3f47; /* Светлый фон */
+    padding: 10px 0px 10px;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+   
+}
+.name-chats span {
+    margin-left: 30px;
+}
+.heder-with-users{
+    background-color: aquamarine;
+}

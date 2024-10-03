@@ -1,0 +1,13 @@
+.user {
+    font-family: "Gill Sans", sans-serif;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+}
+.error-message {
+    background-color: rgb(251, 114, 114); 
+    margin: 10px auto;
+    display: block;
+    border-radius: 5px;
+}

@@ -1,0 +1,38 @@
+.registration-form {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .registration-form p {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .registration-form label {
+    font-family: "Gill Sans", sans-serif;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .registration-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+  }
+  
+  .registration-form h2 {
+    font-family: "Gill Sans", sans-serif;
+  }
+  .registration-form span {
+    background-color: rgb(254, 245, 245); 
+    border: 1px solid #cb0c0c;
+    margin: 10px auto;
+    display: block;
+    border-radius: 8px;
+  }

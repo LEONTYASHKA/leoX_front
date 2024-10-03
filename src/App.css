@@ -1,0 +1,19 @@
+.common-input {
+    background-color:bisque;
+    border-radius: 6px;
+    padding: 6px 3px;
+    text-align: center;
+}
+.common-button{
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+.common-button:hover{
+    background-color: #45a049;
+}
