@@ -12,6 +12,8 @@ const ENDPOINTS = {
   ADD_USER_TO_CHAT: "/chats/:chatId/add-user",
   SET_LAST_READ_MESSAGE: "/chats/:chatId/set-last-read-message",
   UNREAD_MESSAGE: "/chats/:chatId/unread-messages",
+  DELETE_MESSAGE: "/messages/:chatId/message/:messageId",
+  DELETE_USER_FROM_CHAT: "/chats/:chatId/chat/:userId",
 
   // GETCHAT: "/chat/",
 };

@@ -276,4 +276,36 @@ export default class ApiManager {
     console.log(lastMessage);
     return lastMessage;
   };
+  static deleteMessage = async (chatId: number, messageId: number) => {
+    const url =
+      BASE_URL +
+      ENDPOINTS.DELETE_MESSAGE.replace(":chatId", String(chatId)).replace(
+        ":messageId",
+        String(messageId)
+      );
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (localStorage.getItem("token") ?? ""),
+      },
+    });
+    return await response.json();
+  };
+  static deleteUserFromChat = async (chatId: number, userId: number) => {
+    const url =
+      BASE_URL +
+      ENDPOINTS.DELETE_USER_FROM_CHAT.replace(
+        ":chatId",
+        String(chatId)
+      ).replace(":userId", String(userId));
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + (localStorage.getItem("token") ?? ""),
+      },
+    });
+    return await response.json();
+  };
 }

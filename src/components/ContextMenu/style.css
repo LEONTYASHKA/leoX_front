@@ -1,0 +1,68 @@
+.context-menu {
+    position: absolute;
+    background-color: #3b3b3d;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .context-menu li {
+    list-style: none;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .context-menu li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .context-menu li.Delete {
+    color: #ff3b30; /* Красный для удаления */
+  }
+  
+  .context-menu li.delete:hover {
+    background-color: rgba(255, 59, 48, 0.2);
+    color: red;
+  }
+  
+  .context-menu li::before {
+    content: '';
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .context-menu li.reply::before {
+    content: '↩'; /* Иконка для "Ответить" */
+  }
+  
+  .context-menu li.copy::before {
+    content: '📄'; /* Иконка для "Скопировать" */
+  }
+  
+  .context-menu li.edit::before {
+    content: '✏️'; /* Иконка для "Изменить" */
+  }
+  
+  .context-menu li.pin::before {
+    content: '📌'; /* Иконка для "Открепить" */
+  }
+  
+  .context-menu li.forward::before {
+    content: '↪️'; /* Иконка для "Переслать" */
+  }
+  
+  .context-menu li.delete::before {
+    content: '🗑'; /* Иконка для "Удалить" */
+  }
+  
+  .context-menu li.select::before {
+    content: '✅'; /* Иконка для "Выбрать" */
+  }
+  

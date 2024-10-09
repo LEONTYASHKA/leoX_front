@@ -4,38 +4,48 @@
     max-width: 600px;
     margin: 0 auto;
     background-color: #f9f7eb; /* Светлый фон */
-    /* background-image: url('/backgrond.jpg'); */
+    background-image: url('/backgrond.jpg');
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легкая тень */
     padding: 0;
     font-family: 'Arial', sans-serif;
     border-radius: 12px; /* Скругленные углы */
+    position: relative;
   }
 
 .message {
     align-self: flex-start;
-    background-color: rgb(42, 47, 54); /* Темный фон */
+    background-color: #3a394d; /* Темный фон */
     color: #ffffff; /* Белый текст */
     border-radius: 18px 18px 18px 0; /* Скругленные углы, похожие на Telegram */
-    padding: 10px;
-    padding-right: 38px;
-    margin: 5px 0; /* Отступы между сообщениями */
+  padding: 10px;
+    margin: 5px; /* Отступы между сообщениями */
     max-width: 80%; /* Ограничение ширины сообщения */
-    position: relative; /* Для позиционирования даты */
+    position:relative; /* Для позиционирования даты */
     font-size: 14px; /* Увеличен размер шрифта */
     word-wrap: break-word; /* Перенос слов */
+    padding-right: 40px;
 }
+.messege-sender-name {
+    position: relative;
+    color: darkgoldenrod;
+    margin-top: -5px;
+    font-size: 14px;
+   
+}
+
+
 .messageFromCurrentUser {
     align-self: flex-end;
     background-color: #5f50ff; /* Фиолетовый фон для пользователя */
     color: #ffffff; /* Белый текст */
     border-radius: 18px 18px 0 18px; /* Скругленные углы, как в Telegram */
     padding: 10px;
-    padding-right: 38px;
-    margin: 10px 0; /* Отступы между сообщениями */
-    max-width: 100%; /* Ограничение ширины сообщения */
-    position: relative; /* Для позиционирования даты */
-    font-size: 14px;
-    word-wrap: break-word;
+    margin: 5px; /* Отступы между сообщениями */
+    max-width: 80%; /* Ограничение ширины сообщения */
+    position:relative; /* Для позиционирования даты */
+    font-size: 14px; /* Увеличен размер шрифта */
+    word-wrap: break-word; /* Перенос слов */
+    padding-right: 40px;
 }
 .date {
     position: absolute;
@@ -53,8 +63,7 @@
     max-width: 600px;
     margin: 0 auto;
     font-family: 'Roboto', sans-serif;
-    padding: 10px;
-    overflow-y: auto;
+    padding: 10px
 }
 
 .send-message-container {
@@ -183,8 +192,55 @@ border-top-right-radius: 20px;
    
 }
 .name-chats span {
-    margin-left: 30px;
+    
 }
-.heder-with-users{
-    background-color: aquamarine;
+.heder-with-users li {
+    list-style: none;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
 }
+.heder-with-users {
+    position: absolute;
+    background-color: #3b3b3d;
+    color: white;
+    z-index: 1000;
+    font-family: 'Arial', sans-serif;
+    width: 600px;
+  }
+  .heder-with-users li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+.heder-with-users ul:last-child {
+  border-bottom: none; /* Убираем линию у последнего элемента */
+}
+.avatar-circle-msg {
+    background-color: #a8a6ba;
+    color: white;
+    border-radius: 50%;
+    width: 30px; /* Фиксированная ширина */
+    height: 30px; /* Фиксированная высота */
+    min-width: 30px; /* Минимальная ширина */
+    min-height: 30x; /* Минимальная высота */
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap; /* Предотвращает перенос текста */
+   position: absolute;
+   left: -33px;
+  }
+  .delete-button{
+    color: red;
+    cursor: pointer;
+    margin-left: auto; /* Перемещает кнопку вправо */
+    padding: 0 10px;
+    float: right;
+  }

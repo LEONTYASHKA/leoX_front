@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import "./chat.css";
 import { io, Socket } from "socket.io-client";
+import ContextMenu from "../ContextMenu/ContextMenu";
 
 export type UserDto = {
   id: number;
@@ -52,14 +53,20 @@ const Chat = (chatInfo: { chatId: any }) => {
   const [isUsersListVisible, setIsUsersListVisible] = useState(false);
   const [usersInChat, setUserInChat] = useState<UserDto[]>([]);
   const [lastReadMessageId, setLastReadMessageId] = useState(null);
-
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+  const [selectedMessageId, setSelectedMessageId] = useState<number | null>(
+    null
+  );
+  const [selectedUserId, setSelectedUserId] = useState<number | null>();
+  const [chatMame, setChatMame] = useState<string>("");
   ////
   const [socket, setSocket] = useState<Socket | null>(null);
   const [messages, setMessages] = useState<string[]>([]);
   const send = (value: string) => {
     socket?.emit("messages", value);
   };
-  // Инициализация WebSocket
+  // initial WebSocket
   useEffect(() => {
     const newSocket = io("http://localhost:8001", {
       query: {
@@ -69,14 +76,14 @@ const Chat = (chatInfo: { chatId: any }) => {
     });
     setSocket(newSocket);
 
-    // Подписка на получение новых сообщений
+    // subscribe for get new messag
     newSocket.on(
       "message",
       async (data: { chatId: number; messages: MessageDto[] }) => {
-        // Обновляем список сообщений
+        // update list message
         setMessageData(data.messages);
 
-        // Устанавливаем последнее прочитанное сообщение
+        // setup last read message
         if (data.messages.length > 0) {
           const lastMessage = data.messages[data.messages.length - 1];
           setLastMessageId(lastMessage.id);
@@ -91,7 +98,6 @@ const Chat = (chatInfo: { chatId: any }) => {
     };
   }, [chatInfo.chatId]);
 
-  // Функция для отображения/скрытия списка пользователей
   const toggleUsersList = () => {
     setIsUsersListVisible(!isUsersListVisible);
   };
@@ -104,6 +110,7 @@ const Chat = (chatInfo: { chatId: any }) => {
       );
       setUserInChat(responseChatInformation.users);
       setResponseChatInformation(responseChatInformation);
+      setChatMame(responseChatInformation.name);
     };
     console.log(responseChatInformation);
     fetchChatData();
@@ -156,7 +163,12 @@ const Chat = (chatInfo: { chatId: any }) => {
         chatId: chatInfo.chatId,
         message: newMessage,
       });
-      setNewMessage(""); // Очищаем поле после отправки
+      setNewMessage("");
+    }
+  };
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
     }
   };
 
@@ -175,11 +187,10 @@ const Chat = (chatInfo: { chatId: any }) => {
     }
   };
 
-  // Функция поиска пользователя по email
   const handleSearchUser = async () => {
-    const result = await ApiManager.searchUserByEmail(searchEmail); // Функция поиска
+    const result = await ApiManager.searchUserByEmail(searchEmail);
     console.log(result);
-    setSearchedUser(result); // Устанавливаем найденного пользователя
+    setSearchedUser(result);
     setSearchError(result.message);
   };
 
@@ -197,9 +208,39 @@ const Chat = (chatInfo: { chatId: any }) => {
 
       setUserInChat([...usersInChat, resFromAddUser.newUser]);
       console.log(resFromAddUser);
+      setChatMame(resFromAddUser.name);
     }
   };
 
+  const handleContextMenu = (event: React.MouseEvent, messageId: number) => {
+    event.preventDefault();
+    setSelectedMessageId(messageId);
+    setMenuPosition({ x: event.pageX, y: event.pageY });
+    setMenuVisible(true);
+  };
+
+  const handleSelectMessage = () => {
+    alert(`message with ID ${selectedMessageId} selected`);
+    setMenuVisible(false);
+  };
+
+  const handleDeleteMessage = async () => {
+    setMessageData((prevMessages) =>
+      prevMessages.filter((message) => message.id !== selectedMessageId)
+    );
+
+    await ApiManager.deleteMessage(chatInfo.chatId, selectedMessageId);
+    setMenuVisible(false);
+  };
+  const handleSelectUser = (userId: number) => {
+    setSelectedUserId(userId);
+  };
+  const deleteUserFromChat = async (idUserToDelete: number) => {
+    await ApiManager.deleteUserFromChat(chatInfo.chatId, idUserToDelete);
+    setUserInChat((prevUsers) =>
+      prevUsers.filter((user) => user.id !== selectedUserId)
+    );
+  };
   if (!responseChatInformation) {
     return <div>Загрузка...</div>;
   }
@@ -235,10 +276,9 @@ const Chat = (chatInfo: { chatId: any }) => {
         </div>{" "}
         <div className="name-chats" onClick={toggleUsersList}>
           <span>
-            Welcome to Chat: {responseChatInformation.name} {}
+            Welcome to Chat: {chatMame} {}
           </span>
         </div>
-        {/* Отображение списка пользователей только при открытии */}
         {isUsersListVisible && (
           <div className="heder-with-users">
             {usersInChat.map((sender: UserDto) => {
@@ -246,42 +286,76 @@ const Chat = (chatInfo: { chatId: any }) => {
                 return null;
               }
               return (
-                <div key={sender.id}>
-                  <p>
-                    {sender.firstName} {sender.lastName}:
-                  </p>
-                </div>
+                <ul key={sender.id}>
+                  <li>
+                    <div className="avatar-circle-msg">
+                      {sender?.firstName[0]}
+                      {sender?.lastName[0]}
+                    </div>
+                    {sender.firstName} {sender.lastName}
+                    <div
+                      className="delete-button"
+                      onClick={() => deleteUserFromChat(sender.id)}
+                    >
+                      {" "}
+                      Delete{" "}
+                    </div>
+                  </li>
+                </ul>
               );
             })}
           </div>
         )}
         <div className="place-for-msg">
           <div className="chat-container-msg">
-            {responseMessages.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className={
-                    item.sender.isCurrentUserSent
-                      ? "messageFromCurrentUser"
-                      : "message"
-                  }
-                >
-                  {item.sender.isCurrentUserSent ? (
-                    <span>You: </span>
-                  ) : (
-                    item.sender.firstName + " " + item.sender.lastName + ": "
-                  )}
-                  {item.text}{" "}
-                  <span className="date">
-                    {moment(item.createdAt).format("HH:mm")}
+            {responseMessages.map((item) => (
+              <div
+                key={item.id}
+                onContextMenu={(e) => handleContextMenu(e, item.id)}
+                className={
+                  item.sender.isCurrentUserSent
+                    ? "messageFromCurrentUser"
+                    : "message"
+                }
+              >
+                {item.sender.isCurrentUserSent ? (
+                  <h3 className="messege-sender-name">You</h3>
+                ) : (
+                  <span>
+                    {" "}
+                    <div className="avatar-circle-msg">
+                      {item.sender.firstName[0]}
+                      {item.sender.lastName[0]}
+                    </div>
+                    <h3 className="messege-sender-name">
+                      {item.sender.firstName} {item.sender.lastName}
+                    </h3>
                   </span>
-                </div>
-              );
-            })}
+                )}
+                {item.text}
+                <span className="date">
+                  {moment(item.createdAt).format("HH:mm")}
+                </span>
+              </div>
+            ))}
           </div>
+
+          {menuVisible && (
+            <div
+              style={{
+                position: "absolute",
+                top: menuPosition.y,
+                left: menuPosition.x - 10,
+              }}
+            >
+              <ContextMenu
+                onSelect={handleSelectMessage}
+                onDelete={handleDeleteMessage}
+              />
+            </div>
+          )}
         </div>
-        <div className="send-message-container">
+        <div className="send-message-container" onKeyDown={handleKeyDown}>
           <input
             type="text"
             value={newMessage}
@@ -295,4 +369,5 @@ const Chat = (chatInfo: { chatId: any }) => {
     );
   }
 };
+
 export default Chat;
